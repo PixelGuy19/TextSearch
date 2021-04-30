@@ -13,15 +13,27 @@ function Write3() {
     var Array = ["Me one", "Me two"];
     WriteResults(Array);
 
-    var Out = [];
     var Html = document.getElementById("Copied html").value;
     var Regular = document.getElementById("Find pattern").value;
 
-    var ToWrite = GetMatchesInHTML(Html, Regular);
+    var ToWrite = GetMatchesWithMoreThenOne(Html, Regular.split(';'))
 
     WriteResults(ToWrite);
 }
 
+/**
+ * Same with GetMatchesInHTML, but with more then 1 find word
+ * @param Html html code as text
+ * @param ToFindMassive Group of words to find
+ * @returns {[string, string...]}
+ */
+function GetMatchesWithMoreThenOne(Html, ToFindMassive){
+    var Out = [];
+    for (let i = 0; i < ToFindMassive.length; i++){
+        Array.prototype.push.apply(Out, GetMatchesInHTML(Html, ToFindMassive[i]))
+    }
+    return Out;
+}
 /**
  * Find matches text in html
  * @param Html html code as text
